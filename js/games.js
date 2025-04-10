@@ -46,57 +46,85 @@ const tableBodyHTML = document.getElementById("table-body")
 
 console.log(tableBodyHTML)
 
+function pintarJuegos(arrayJuegos) {
 
+  tableBodyHTML.innerHTML = ""
 
-games.forEach((juego) => {
-  console.log(juego.name);
+  arrayJuegos.forEach((juego) => {
 
-  tableBodyHTML.innerHTML += `<tr>
-                                    <td class="image-cell">
-                                        <img src="${juego.image}" alt="">
-                                    </td>
-                                    <td class="id-cell">
-                                        ${juego.id}
-                                    </td>
-                                    <td class="name-cell">${juego.name}</td>
-                                    <td class="category-cell">
-                                        ${juego.category}
-                                    </td>
-                                    <td class="price-cell">
-                                        $ ${juego.price} 
-                                    </td>
-                                    <td class="action-cell">
-                                        
-                                        <div class="buttons">
+    console.log(juego.name);
 
-                                            <button class="button-icon">
-                                                <i class="fa-solid fa-pencil"></i>
-                                            </button>
+    tableBodyHTML.innerHTML += `<tr>
+                                      <td class="image-cell">
+                                          <img src="${juego.image}" alt="">
+                                      </td>
+                                      <td class="id-cell">
+                                          ${juego.id}
+                                      </td>
+                                      <td class="name-cell">${juego.name}</td>
+                                      <td class="category-cell">
+                                          ${juego.category}
+                                      </td>
+                                      <td class="price-cell">
+                                          $ ${juego.price} 
+                                      </td>
+                                      <td class="action-cell">
+                                          
+                                          <div class="buttons">
+  
+                                              <button class="button-icon">
+                                                  <i class="fa-solid fa-pencil"></i>
+                                              </button>
+  
+                                              <button class="button-icon danger">
+                                                  <i class="fa-solid fa-trash"></i>
+                                              </button>
+  
+                                          </div>
+  
+                                      </td>
+                                  </tr>`;
+  })
 
-                                            <button class="button-icon danger">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
+}
 
-                                        </div>
+pintarJuegos(games)
 
-                                    </td>
-                                </tr>`;
+// function ordenarPorPrecioAscendente() {
 
-})
+//   const juegosAsc = games.toSorted((a, b) => {
+//     return a.price - b.price
+//   })
 
+//   pintarJuegos(juegosAsc)
+// }
 
+// function ordenarPorPrecioDescendente() {
 
+//   const juegosDesc = games.toSorted((a, b) => {
 
+//     return b.price - a.price
+//   })
+//   pintarJuegos(juegosDesc)
+// }
 
+function ordenarPorPrecio (orden){
+  const juegosOrenados = games.toSorted((a,b)=>{
+
+    if(orden==="desc") return b.price - a.price
+    else return a.price - b.price
+
+  })
+
+  if(!orden) {
+    pintarJuegos(games)
+  }
+
+  pintarJuegos(juegosOrenados)
+}
 
 
 
 // Elaborar una función que reciba un array de objectos y pinte cada uno de ellos en el HTML, precisamente en el body de la tabla de juegos.
-
-
-
-
-
-
 
 // function pintarJuegos()

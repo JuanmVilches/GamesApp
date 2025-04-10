@@ -14,7 +14,9 @@
         crossorigin="anonymous"></script>
 
     <!-- # FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- # Custom Styles -->
     <link rel="stylesheet" href="/css/styles.css" />
@@ -32,7 +34,7 @@
             </div>
         </nav>
     </header>
-    
+
     <main class="container-xl">
         <div class="row">
 
@@ -41,10 +43,41 @@
             </div>
 
             <div class="col-12 col-lg-8">
-                
+                <h2>JUEGOS</h2>
+                <div class="p-3 border border-info-subtle">
+                    <div class="row">
+                        <div class="col">
+                            <label for="name" class="form-label">Buscar</label>
+                            <input type="text" class="form-control" id="name" placeholder="Nombre del juego" />
+                        </div>
+                        <div class="col">
+                            <label for="genre" class="form-label">Género</label>
+                            <select id="genre" class="form-select">
+                                <option selected disabled>Selecciona un género</option>
+                                <option value="Action">Acción</option>
+                                <option value="Adventure">Aventura</option>
+                                <option value="Board">Tablero</option>
+                                <option value="Sports">Deportes</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="genre" class="form-label">Ordenar</label>
+                            <div>
+                                <button onclick="ordenarPorPrecio('asc')" 
+                                        class="btn btn-sm btn-primary" title="Ordenar precio ascendente">
+                                    <i class="fa-solid fa-caret-up"></i>
+                                </button>
+                                <button onclick="ordenarPorPrecio('desc')" class="btn btn-sm btn-primary" title="Ordenar precio descendente">
+                                    <i class="fa-solid fa-caret-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <table class="table table-dark table-striped">
                     <thead>
-                        <tr >
+                        <tr>
                             <th>Imagen</th>
                             <th>#</th>
                             <th>Nombre</th>
@@ -57,7 +90,7 @@
 
 
                     <tbody id="table-body">
-                        
+
 
                     </tbody>
                 </table>
