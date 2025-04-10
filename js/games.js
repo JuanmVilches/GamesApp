@@ -109,16 +109,20 @@ pintarJuegos(games)
 // }
 
 function ordenarPorPrecio (orden){
-  const juegosOrenados = games.toSorted((a,b)=>{
-
-    if(orden==="desc") return b.price - a.price
-    else return a.price - b.price
-
-  })
 
   if(!orden) {
     pintarJuegos(games)
+    return
   }
+
+  //Utilizando el operador ternario
+  const juegosOrenados = games.toSorted((a,b)=> orden === 'asc' ?  a.price - b.price :  b.price - a.price)
+
+  //   if(orden==="desc") return b.price - a.price
+  //   else return a.price - b.price
+
+  // })
+
 
   pintarJuegos(juegosOrenados)
 }
