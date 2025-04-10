@@ -11,7 +11,7 @@ const games = [
     id: 1000,
     name: "Super Mario Party™ Jamboree",
     price: 75200,
-    category: "Adventure",
+    category: "Board",
     image:
       "https://assets.nintendo.com/image/fetch/q_auto/f_auto/https://atum-img-lp1.cdn.nintendo.net/i/c/49ff5c5e983d4a2a8682588179d496c5_1024",
   },
@@ -44,15 +44,15 @@ const games = [
 
 const tableBodyHTML = document.getElementById("table-body")
 
-console.log(tableBodyHTML)
+const searchHTML = document.querySelector('#name')
+
+console.log(searchHTML)
 
 function pintarJuegos(arrayJuegos) {
 
   tableBodyHTML.innerHTML = ""
 
   arrayJuegos.forEach((juego) => {
-
-    console.log(juego.name);
 
     tableBodyHTML.innerHTML += `<tr>
                                       <td class="image-cell">
@@ -87,6 +87,24 @@ function pintarJuegos(arrayJuegos) {
   })
 
 }
+
+searchHTML.addEventListener("keyup",function(evt){
+
+  const nombreDeJuegoABuscar = evt.target.value.toLowerCase()
+  
+  const filtarJuegosNombre = games.filter(game => {
+
+    const nombreJuego = game.name.toLowerCase()
+
+    return nombreJuego.includes(nombreDeJuegoABuscar)
+
+    // if (nombreDeJuegoABuscar === game.name.toLowerCase()){
+    //   return true
+    // }
+  })
+
+  pintarJuegos(filtarJuegosNombre)
+})
 
 pintarJuegos(games)
 
@@ -127,8 +145,22 @@ function ordenarPorPrecio (orden){
   pintarJuegos(juegosOrenados)
 }
 
+function filtrarPorCategoria(eventito) {
 
+  const categoriaSeleccionada = eventito.target.value.toLowerCase()
 
-// Elaborar una función que reciba un array de objectos y pinte cada uno de ellos en el HTML, precisamente en el body de la tabla de juegos.
+  const juegosFiltrados = games.filter (juego =>{
 
-// function pintarJuegos()
+    if(juego.category.toLowerCase() === categoriaSeleccionada) {
+      return true
+    }
+    return false
+  })
+
+  pintarJuegos(juegosFiltrados)
+}
+
+function filtrarPorNombre() {
+  console.log("Filtrar por nombre")
+}
+

@@ -51,13 +51,13 @@
                             <input type="text" class="form-control" id="name" placeholder="Nombre del juego" />
                         </div>
                         <div class="col">
-                            <label for="genre" class="form-label">Género</label>
-                            <select id="genre" class="form-select">
+                            <label for="genre" class="form-label">Categoría</label>
+                            <select id="genre" class="form-select" onchange="filtrarPorCategoria(event)">
                                 <option selected disabled>Selecciona un género</option>
-                                <option value="Action">Acción</option>
-                                <option value="Adventure">Aventura</option>
-                                <option value="Board">Tablero</option>
-                                <option value="Sports">Deportes</option>
+                                <option value="action">Acción</option>
+                                <option value="adventure">Aventura</option>
+                                <option value="board">Tablero</option>
+                                <option value="sports">Deportes</option>
                             </select>
                         </div>
                         <div class="col">
