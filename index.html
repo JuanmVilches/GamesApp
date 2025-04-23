@@ -36,19 +36,49 @@
     </header>
 
     <main class="container-xl">
-        <div class="row">
 
-            <div class="col-12 col-lg-4">
-                <h2>FORMULARIO</h2>
+        <div class="row">
+            <div class="col-12 col-lg-4 mt-4">
+                <h2 class="text-center">FORMULARIO</h2>
+                <form class="admin-form" id="games-form">
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre del Juego</label>
+                        <input required type="text" name="name" class="form-control" id="name" placeholder="Mario Party">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="image" class="form-label">URL Imagen</label>
+                        <input required type="url" name="image" class="form-control" id="image" placeholder="http://example.com/image.png">
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="price" class="form-label">Precio</label>
+                            <input required type="number" name="price" class="form-control" id="price" placeholder="$199.99">
+                        </div>
+                        <div class="col">
+                            <label for="category" class="form-label">Categoría</label>
+                            <select name="category" id="category" class="form-select"> 
+                                <option value="action">Acción</option>
+                                <option value="adventure">Aventura</option>
+                                <option value="board">Tablero</option>
+                                <option value="sports">Rol</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Cargar</button>
+                </form>
             </div>
 
-            <div class="col-12 col-lg-8">
-                <h2>JUEGOS</h2>
+            <div class="col-12 col-lg-8 mt-4">
+                <h2 class="text-center">JUEGOS</h2>
                 <div class="p-3 border border-info-subtle">
                     <div class="row align-items-center">
                         <div class="col">
                             <label for="name" class="form-label">Buscar</label>
-                            <input type="text" class="form-control" id="name" placeholder="Nombre del juego" />
+                            <input type="text" class="form-control" id="search" placeholder="Nombre del juego" />
                         </div>
                         <div class="col">
                             <label for="genre" class="form-label">Categoría</label>
@@ -63,14 +93,16 @@
                         <div class="col">
                             <label for="genre" class="form-label">Ordenar</label>
                             <div>
-                                <button onclick="ordenarPorPrecio('asc')" 
-                                        class="btn btn-sm btn-primary" title="Ordenar precio ascendente">
+                                <button onclick="ordenarPorPrecio('asc')" class="btn btn-sm btn-primary"
+                                    title="Ordenar precio ascendente">
                                     <i class="fa-solid fa-caret-up"></i>
                                 </button>
-                                <button onclick="ordenarPorPrecio('desc')" class="btn btn-sm btn-primary" title="Ordenar precio descendente">
+                                <button onclick="ordenarPorPrecio('desc')" class="btn btn-sm btn-primary"
+                                    title="Ordenar precio descendente">
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
-                                <button onclick="ordenarPorPrecio('')" class="btn btn-sm btn-primary" title="Ordenar precio descendente">
+                                <button onclick="ordenarPorPrecio('')" class="btn btn-sm btn-primary"
+                                    title="Ordenar precio descendente">
                                     <i class="fa-solid fa-caret-down"></i>
                                 </button>
                             </div>

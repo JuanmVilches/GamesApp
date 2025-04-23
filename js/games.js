@@ -43,17 +43,43 @@ const games = [
 ];
 
 const tableBodyHTML = document.getElementById("table-body")
+const searchHTML = document.querySelector('#search')
+const gamesFormHTML = document.getElementById("games-form")
 
-const searchHTML = document.querySelector('#name')
 
-console.log(searchHTML)
+console.log(gamesFormHTML)
+gamesFormHTML.addEventListener("submit", (evt)=>{
+  evt.preventDefault()
+  console.log(evt)
+
+  const el = evt.target.elements
+
+  const newGame = {
+    //Toma los ultimos 4 numeros
+    id: Date.now().toString().slice(-4),
+    // id: Math.round(Date.now() / 1000000000),
+    name: el.name.value,
+    price: el.price.valueAsNumber,
+    image: el.image.value,
+    category: el.category.value,
+  }
+
+  games.push (newGame)
+
+  pintarJuegos(games)
+  console.log (newGame)
+//   console.log(el.name.value)
+//   console.log(el.image.value)
+//   console.log(el.price.value)
+//   console.log(el.category.value)
+})
 
 function pintarJuegos(arrayJuegos) {
 
   tableBodyHTML.innerHTML = ""
 
   arrayJuegos.forEach((juego) => {
-
+  
     tableBodyHTML.innerHTML += `<tr>
                                       <td class="image-cell">
                                           <img src="${juego.image}" alt="">
@@ -76,7 +102,7 @@ function pintarJuegos(arrayJuegos) {
                                                   <i class="fa-solid fa-pencil"></i>
                                               </button>
   
-                                              <button class="button-icon danger">
+                                              <button class="button-icon danger" onclick="borrarJuego(${juego.id})">
                                                   <i class="fa-solid fa-trash"></i>
                                               </button>
   
@@ -85,12 +111,13 @@ function pintarJuegos(arrayJuegos) {
                                       </td>
                                   </tr>`;
   })
-
 }
 
-searchHTML.addEventListener("keyup",function(evt){
+pintarJuegos(games)
 
-  const nombreDeJuegoABuscar = evt.target.value.toLowerCase()
+searchHTML.addEventListener("input",function(evt){
+  
+const nombreDeJuegoABuscar = evt.target.value.toLowerCase()
   
   const filtarJuegosNombre = games.filter(game => {
 
@@ -106,7 +133,29 @@ searchHTML.addEventListener("keyup",function(evt){
   pintarJuegos(filtarJuegosNombre)
 })
 
-pintarJuegos(games)
+function borrarJuego(idBorar) {
+
+// Recibo el id
+// Vamos a buscar la posicion del elemento usando findIndex
+
+const indice = games.findIndex(juego=>{
+
+  if (juego.id === idBorar) {
+    return true
+  }
+})
+
+// Confirmamos que el usuario realmente quiere borrar el juego
+const borrar = confirm ("Realmente desea borrar este juego?")
+
+if (borrar) {
+  games.splice(indice,1)
+  pintarJuegos(games)
+} 
+
+// Usamos splice para borrar el elemento encontrado en findIndex
+
+}
 
 // function ordenarPorPrecioAscendente() {
 
@@ -145,6 +194,7 @@ function ordenarPorPrecio (orden){
   pintarJuegos(juegosOrenados)
 }
 
+// Funcion para filtrar por categoria
 function filtrarPorCategoria(eventito) {
 
   const categoriaSeleccionada = eventito.target.value.toLowerCase()
