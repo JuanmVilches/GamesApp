@@ -45,10 +45,17 @@ const games = [
 const tableBodyHTML = document.getElementById("table-body")
 const searchHTML = document.querySelector('#search')
 const gamesFormHTML = document.getElementById("games-form")
+/*
+Esto no funciona porque esta linea se lee antes de que los juegos se pinten, por lo tanto el console.log no devuelve nada
+const gameDetailButtons = document.querySelectorAll("button[data-game-detail]")
+console.log(gameDetailButtons)
+ */
+
+let gameDetailButtons
 
 
-console.log(gamesFormHTML)
-gamesFormHTML.addEventListener("submit", (evt)=>{
+// Agregar juegos mediante el formulario
+gamesFormHTML.addEventListener("submit", (evt) => {
   evt.preventDefault()
   console.log(evt)
 
@@ -64,22 +71,24 @@ gamesFormHTML.addEventListener("submit", (evt)=>{
     category: el.category.value,
   }
 
-  games.push (newGame)
+  games.push(newGame)
 
   pintarJuegos(games)
-  console.log (newGame)
-//   console.log(el.name.value)
-//   console.log(el.image.value)
-//   console.log(el.price.value)
-//   console.log(el.category.value)
+  gamesFormHTML.reset()
+  console.log(newGame)
+  //   console.log(el.name.value)
+  //   console.log(el.image.value)
+  //   console.log(el.price.value)
+  //   console.log(el.category.value)
 })
 
+//Pintar los juegos en la tabla
 function pintarJuegos(arrayJuegos) {
 
   tableBodyHTML.innerHTML = ""
 
   arrayJuegos.forEach((juego) => {
-  
+
     tableBodyHTML.innerHTML += `<tr>
                                       <td class="image-cell">
                                           <img src="${juego.image}" alt="">
@@ -98,8 +107,8 @@ function pintarJuegos(arrayJuegos) {
                                           
                                           <div class="buttons">
   
-                                              <button class="button-icon">
-                                                  <i class="fa-solid fa-pencil"></i>
+                                              <button class="button-icon" data-game-detail="${juego.id}" data-bs-target="#game-modal" data-bs-toggle="modal">
+                                                  <i class="fa-solid fa-eye"></i>
                                               </button>
   
                                               <button class="button-icon danger" onclick="borrarJuego(${juego.id})">
@@ -111,14 +120,53 @@ function pintarJuegos(arrayJuegos) {
                                       </td>
                                   </tr>`;
   })
+
+  gameDetailButtons = document.querySelectorAll("button[data-game-detail]")
+  console.log(gameDetailButtons)
+
+  gameDetailButtons.forEach(button => {
+    button.addEventListener("click", (event) => {
+
+      const id = event.currentTarget.dataset.gameDetail
+
+      const juegos = games.find(game => {
+        if (game.id == id) { return true }
+      })
+      // console.log(event.currentTarget.dataset.gameDetail)
+      const modalTitle = document.getElementById("game-modal-title")
+      const modalBody = document.getElementById("game-modal-body")
+
+      modalTitle.innerText = juegos.name
+      modalBody.innerHTML = 
+      `<div class="row">
+        <div class="col">
+          <img src="${juegos.image}" width="150px" height="150px">
+        </div>
+        <div class="col">
+        <p>${juegos.category}</p>
+        <p>${juegos.price}</p>
+        </div>
+      </div>`
+    })
+  })
 }
 
 pintarJuegos(games)
 
-searchHTML.addEventListener("input",function(evt){
-  
-const nombreDeJuegoABuscar = evt.target.value.toLowerCase()
-  
+
+function mostrarJuego(id) {
+
+}
+
+
+
+
+
+//Buscar juegos por nombre
+searchHTML.addEventListener("input", function (evt) {
+
+  const nombreDeJuegoABuscar = evt.target.value.toLowerCase()
+
   const filtarJuegosNombre = games.filter(game => {
 
     const nombreJuego = game.name.toLowerCase()
@@ -134,27 +182,20 @@ const nombreDeJuegoABuscar = evt.target.value.toLowerCase()
 })
 
 function borrarJuego(idBorar) {
-
-// Recibo el id
-// Vamos a buscar la posicion del elemento usando findIndex
-
-const indice = games.findIndex(juego=>{
-
-  if (juego.id === idBorar) {
-    return true
+  // Recibo el id
+  // Vamos a buscar la posicion del elemento usando findIndex
+  const indice = games.findIndex(juego => {
+    if (juego.id === idBorar) {
+      return true
+    }
+  })
+  // Confirmamos que el usuario realmente quiere borrar el juego
+  const borrar = confirm("Realmente desea borrar este juego?")
+  if (borrar) {
+    games.splice(indice, 1)
+    pintarJuegos(games)
   }
-})
-
-// Confirmamos que el usuario realmente quiere borrar el juego
-const borrar = confirm ("Realmente desea borrar este juego?")
-
-if (borrar) {
-  games.splice(indice,1)
-  pintarJuegos(games)
-} 
-
-// Usamos splice para borrar el elemento encontrado en findIndex
-
+  // Usamos splice para borrar el elemento encontrado en findIndex
 }
 
 // function ordenarPorPrecioAscendente() {
@@ -175,15 +216,15 @@ if (borrar) {
 //   pintarJuegos(juegosDesc)
 // }
 
-function ordenarPorPrecio (orden){
+function ordenarPorPrecio(orden) {
 
-  if(!orden) {
+  if (!orden) {
     pintarJuegos(games)
     return
   }
 
   //Utilizando el operador ternario
-  const juegosOrenados = games.toSorted((a,b)=> orden === 'asc' ?  a.price - b.price :  b.price - a.price)
+  const juegosOrenados = games.toSorted((a, b) => orden === 'asc' ? a.price - b.price : b.price - a.price)
 
   //   if(orden==="desc") return b.price - a.price
   //   else return a.price - b.price
@@ -199,9 +240,9 @@ function filtrarPorCategoria(eventito) {
 
   const categoriaSeleccionada = eventito.target.value.toLowerCase()
 
-  const juegosFiltrados = games.filter (juego =>{
+  const juegosFiltrados = games.filter(juego => {
 
-    if(juego.category.toLowerCase() === categoriaSeleccionada) {
+    if (juego.category.toLowerCase() === categoriaSeleccionada) {
       return true
     }
     return false
